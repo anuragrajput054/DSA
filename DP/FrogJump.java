@@ -1,3 +1,4 @@
+import java.util.*;
 class FrogJump{
      public static void main(String[] args) {
         System.out.println("Try programiz.pro");
@@ -7,6 +8,7 @@ class FrogJump{
         Arrays.fill(dp,-1);
         System.out.println(memo(3,dp, nums));
         System.out.println(space(3,nums));
+        System.out.println(kJump(3,2,nums));
     }
     public static int rec(int n ,int[] nums){
           if(n == 0) return 0;
@@ -42,4 +44,16 @@ class FrogJump{
         }
         return pre;
     }
+    public static int kJump(int n, int k , int[] nums){
+        if(n == 0 ) return 0;
+        int minStep = Integer.MAX_VALUE;
+        for(int i = 1 ; i <= k ; i++){
+            if(n - i >= 0){
+              int jump = kJump(n-i,k,nums) + Math.abs(nums[n] - nums[n-i]);
+              minStep = Math.min(minStep, jump);
+          }
+        }
+        return minStep;
+    }
+    
 }
