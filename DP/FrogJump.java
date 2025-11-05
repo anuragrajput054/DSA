@@ -9,6 +9,9 @@ class FrogJump{
         System.out.println(memo(3,dp, nums));
         System.out.println(space(3,nums));
         System.out.println(kJump(3,3,nums));
+        System.out.println(kJumpTabu(3,3,dp,nums));
+        System.out.println(kJumpMemo(3,3,dp,nums));
+        System.out.println(spaceOpt(3,3,nums));
     }
     public static int rec(int n ,int[] nums){
           if(n == 0) return 0;
@@ -55,5 +58,49 @@ class FrogJump{
         }
         return minStep;
     }
-    
+    public static int kJumpTabu(int n , int k , int[] dp, int[] nums){
+           dp[0] = 0;
+           for(int i = 1 ; i <= n ; i++){
+                int minStep = Integer.MAX_VALUE;
+                for(int j = 1 ; j <= k ; j++){
+                    if(i - j >= 0){
+                        int jump = dp[i-j] + Math.abs(nums[i] - nums[i-j]);
+                        minStep = Math.min(minStep, jump);
+                    }
+                  dp[i] = minStep;
+             }
+        }
+        return dp[n];
+     }
+
+     public static int kJumpMemo(int n , int k , int[] dp, int[] nums){
+        if(n == 0) return 0;
+        if(dp[n] != -1) return dp[n];
+        int minStep = Integer.MAX_VALUE;
+        for(int i = 1 ; i <= k ; i++){
+            if(n - i >= 0){
+                int jump = kJumpMemo(n-i,k,dp,nums) + Math.abs(nums[n] - nums[n-i]);
+                minStep = Math.min(minStep, jump);
+            }
+        }
+        return dp[n] = minStep;
+}
+public static int spaceOpt(int n , int k , int[] nums){
+    Deque<Integer> dp = new ArrayDeque<>();
+    dp.addLast(0);
+    for(int i = 1 ; i <= n ; i++){
+        int minStep = Integer.MAX_VALUE;
+        for(int j = 1 ; j <= k ; j++){
+            if(i - j >= 0){
+                int jump = dp.peekFirst() + Math.abs(nums[i] - nums[i-j]);
+                minStep = Math.min(minStep, jump);
+            }
+        }
+        if(dp.size() == k){
+            dp.removeFirst();
+        }
+        dp.addLast(minStep);
+    }
+    return dp.peekLast();
+}
 }
