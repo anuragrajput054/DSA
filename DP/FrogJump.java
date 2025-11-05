@@ -8,7 +8,7 @@ class FrogJump{
         Arrays.fill(dp,-1);
         System.out.println(memo(3,dp, nums));
         System.out.println(space(3,nums));
-        System.out.println(kJump(3,2,nums));
+        System.out.println(kJump(3,3,nums));
     }
     public static int rec(int n ,int[] nums){
           if(n == 0) return 0;
