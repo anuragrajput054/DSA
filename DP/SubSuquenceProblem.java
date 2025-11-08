@@ -5,6 +5,7 @@ public class SubSuquenceProblem {
         int[] arr = { 3, 1, 2 };
         printSubSuquence(arr, 0, new java.util.ArrayList<>());
         System.out.println("Maximum Subsequence Sum: " + maxSum);
+        System.out.println("Maximum Subsequence Sum: " + maxSum);
     }
 
     static int maxSum = Integer.MIN_VALUE;;
