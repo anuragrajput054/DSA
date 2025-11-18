@@ -59,4 +59,27 @@ public class NinjaTraning {
         }
         return dp[day][lastIndex] = maxi;
     }
+
+    public static int ninjaTabu(int[][] task) {
+        int n = task.length;
+        int[][] dp = new int[n][4];
+
+        dp[0][0] = Math.max(task[0][1], task[0][2]);
+        dp[0][1] = Math.max(task[0][0], task[0][2]);
+        dp[0][2] = Math.max(task[0][0], task[0][1]);
+        dp[0][3] = Math.max(task[0][0], Math.max(task[0][1], task[0][2]));
+
+        for (int day = 1; day < n; day++) {
+            for (int lastIndex = 0; lastIndex < 4; lastIndex++) {
+                dp[day][lastIndex] = 0;
+                for (int taskIndex = 0; taskIndex < 3; taskIndex++) {
+                    if (taskIndex != lastIndex) {
+                        int point = task[day][taskIndex] + dp[day - 1][taskIndex];
+                        dp[day][lastIndex] = Math.max(dp[day][lastIndex], point);
+                    }
+                }
+            }
+        }
+        return dp[n - 1][3];
+    }
 }
