@@ -9,7 +9,9 @@ public class NinjaTraning {
         };
         System.out.println(ninja(task.length - 1, 3, task));
         int[][] dp = new int[task.length][4];
-        Arrays.fill(dp[0], -1);
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
         System.out.println(ninjaMemo(task.length - 1, 3, task, dp));
     }
 
