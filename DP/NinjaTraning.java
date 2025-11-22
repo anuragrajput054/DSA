@@ -13,6 +13,8 @@ public class NinjaTraning {
             Arrays.fill(row, -1);
         }
         System.out.println(ninjaMemo(task.length - 1, 3, task, dp));
+        System.out.println(ninjaTabu(task));
+        System.out.println(ninjaSpace(task));
     }
 
     public static int ninja(int day, int lastIndex, int[][] task) {
@@ -81,5 +83,28 @@ public class NinjaTraning {
             }
         }
         return dp[n - 1][3];
+    }
+
+    public static int ninjaSpace(int[][] task) {
+        int n = task.length;
+        int[] prev = new int[4];
+        prev[0] = Math.max(task[0][1], task[0][2]);
+        prev[1] = Math.max(task[0][0], task[0][2]);
+        prev[2] = Math.max(task[0][0], task[0][1]);
+        prev[3] = Math.max(task[0][0], Math.max(task[0][1], task[0][2]));
+        for (int day = 1; day < n; day++) {
+            int[] curr = new int[4];
+            for (int lastIndex = 0; lastIndex < 4; lastIndex++) {
+                curr[lastIndex] = 0;
+                for (int taskIndex = 0; taskIndex < 3; taskIndex++) {
+                    if (taskIndex != lastIndex) {
+                        int point = task[day][taskIndex] + prev[taskIndex];
+                        curr[lastIndex] = Math.max(curr[lastIndex], point);
+                    }
+                }
+            }
+            prev = curr;
+        }
+        return prev[3];
     }
 }
