@@ -11,7 +11,7 @@ public class MaximumFallPath {
 
     }
 
-    // time complexity is O(n^2) and space complexity is O(n^2)
+    // time complexity is O(n^2) and space complexity O(n^2)
     public int minFallingPathSum(int[][] matrix) {
         int n = matrix.length;
         // int ans = Integer.MAX_VALUE;
