@@ -13,6 +13,7 @@ public class SubSetSum2 {
         }
         System.out.println(memo(nums.length - 1, target, nums, dp));
         System.out.println(tabulation(target, nums));
+        System.out.println(spaceOptimazation(target, nums));
 
     }
 
@@ -61,6 +62,27 @@ public class SubSetSum2 {
             }
         }
         return dp[nums.length - 1][target];
+    }
+
+    public static int spaceOptimazation(int target, int[] nums) {
+        int[] pre = new int[target + 1];
+        pre[0] = 1;
+        if (nums[0] <= target)
+            pre[nums[0]] = 1;
+        for (int i = 1; i < nums.length; i++) {
+            int[] curr = new int[target + 1];
+            curr[0] = 1;
+            for (int t = 0; t <= target; t++) {
+                int nonPick = pre[t];
+                int pick = 0;
+                if (nums[i] <= t) {
+                    pick = pre[t - nums[i]];
+                }
+                curr[t] = pick + nonPick;
+            }
+            pre = curr;
+        }
+        return pre[target];
     }
 
 }
